@@ -1,0 +1,39 @@
+# Environnements virtuels
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Python
+*.pyc
+__pycache__/
+
+# Flask
+instance/
+.webassets-cache
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Database
+*.sqlite3
+*.db
+
+# Logs
+logs/
+*.log
+
+# Mock data
+mock_data/csvjson.json
+
+# Secrets
+*.env
+
+# VS Code
+.vscode/
+
+# Autres
+.DS_Store
+Thumbs.db
+*.bak
+*.swp
