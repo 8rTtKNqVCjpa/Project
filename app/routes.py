@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from app import app
-from app.models import getorderbyid, load_clean_data, getorderbystatus, datadescription, salesbycountryvisualisation, salesbyyearvisualisation, datacorrelation
+from app.models import getorderbyid, load_clean_data, getorderbystatus, datadescription, salesbycountryvisualisation, salesbyyearvisualisation, datacorrelation, dataheatmap, priceofeachbymsrplmplot
 
 @app.route('/')
 def home():
@@ -48,6 +48,11 @@ def data_correlation():
     result = datacorrelation()
     return jsonify(result)
 
+@app.route('/heatmap', methods=['GET'])
+def data_heatmap():
+    result= dataheatmap()
+    return jsonify(result)
+
 @app.route('/salesbycountryvisualisation', methods=['GET'])
 def salesbycountry_visualisation():
     result = salesbycountryvisualisation()
@@ -56,4 +61,9 @@ def salesbycountry_visualisation():
 @app.route('/salesbyyearvisualisation', methods=['GET'])
 def salesbyyear_visualisation():
     result = salesbyyearvisualisation()
+    return jsonify(result)
+
+@app.route('/lmplot', methods=['GET'])
+def lmplot_priceofeachbymsrp():
+    result= priceofeachbymsrplmplot()
     return jsonify(result)

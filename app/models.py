@@ -64,7 +64,32 @@ def datacorrelation():
         return "Pairplot for data analysis created"
     else:
         return "Error: No data available for correlation analysis"
-
+    
+def dataheatmap():
+    df=load_clean_data()
+    if isinstance(df, pd.DataFrame):
+        numeric_df = df.select_dtypes(include=[int, float])
+        if(numeric_df.empty):
+            return "No numeric data"
+        sns.heatmap(numeric_df.corr(), annot=True)
+        plt.title("The heatmap of the data")
+        plt.savefig("heatmap.png")
+        plt.close()
+        return "Heatmap of the data"
+    else:
+        return "Error: No data available for heatmap visualization"
+    
+def priceofeachbymsrplmplot():
+    df=load_clean_data()
+    if isinstance(df, pd.DataFrame):
+        sns.lmplot(x="MSRP", y="PRICEEACH", data=df, scatter_kws={'alpha':0.3})
+        plt.title("The lmplot for the price of each by MSRP")
+        plt.savefig("Thelmplot.png")
+        plt.close()
+        return "The lmplot"
+    else:
+        return "Error: No data available for the Lmplot visualization"
+    
 def salesbycountryvisualisation():
     df = load_clean_data()
     if isinstance(df, pd.DataFrame):
@@ -92,3 +117,4 @@ def salesbyyearvisualisation():
         return "Sales by year visualization created"
     else:
         return "Error: No data available for year visualization"
+
