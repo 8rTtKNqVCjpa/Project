@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from app import app
 from app.models import getorderbyid, load_clean_data, getorderbystatus, datadescription, salesbycountryvisualisation, salesbyyearvisualisation, datacorrelation, dataheatmap, priceofeachbymsrplmplot
+from app.ml import train_test, predict
 
 @app.route('/')
 def home():
@@ -14,6 +15,7 @@ def fetchall():
         return jsonify(data), 200
     else:
         return jsonify({"Error": "No data available"}), 500
+
 
 @app.route('/order/<int:id>', methods=['GET'])
 def fetchbyid(id):
@@ -67,3 +69,12 @@ def salesbyyear_visualisation():
 def lmplot_priceofeachbymsrp():
     result= priceofeachbymsrplmplot()
     return jsonify(result)
+
+@app.route('/predictsales', methods=['POST'])
+def predict_sales():
+    model, colonnes = train_test()
+    data = request.json
+    prediction = predict(model, data, colonnes)
+    return jsonify(float(prediction[0])), 200
+
+
