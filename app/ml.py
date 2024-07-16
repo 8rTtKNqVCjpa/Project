@@ -28,4 +28,11 @@ def train_test():
     print("mean absolute error:", mae)
     print("mean squared error:", mse)
     print("root mean squared error:", rmse)
-    return model
+    return model, X.columns 
+
+def predict(model, new_data, colonnes):
+    df= pd.DataFrame([new_data])
+    df=pd.get_dummies(data=df, columns=['PRODUCTLINE', 'CITY', 'DEALSIZE'], drop_first=True)
+    df=df.reindex(columns=colonnes, fill_value=0)
+    predictions=model.predict(df)
+    return predictions
