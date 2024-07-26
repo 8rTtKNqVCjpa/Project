@@ -39,11 +39,13 @@ def clean_data():
     return df
 
 def data_as_table(dataframe):
-    return html.Table(
-        html.Tr([html.Th(col) for col in dataframe.columns])+
-        html.Tr([html.Td(dataframe.iloc[i][col] for col in dataframe.columns)])
-        for i in range(len(dataframe))
-    )   
+    return html.Table([
+        html.Thead(html.Tr([html.Th(col) for col in dataframe.columns])),
+        html.Tbody([
+            html.Tr([html.Td(dataframe.iloc[i][col]) for col in dataframe.columns])
+            for i in range(len(dataframe))
+        ])
+    ])
 
 apl.layout=html.Div([
     html.H1("Tableau de données"),
