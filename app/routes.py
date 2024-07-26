@@ -1,20 +1,21 @@
-from flask import request, jsonify
+from flask import request, jsonify, render_template
 from app import app
-from app.models import getorderbyid, load_clean_data, getorderbystatus, datadescription, salesbycountryvisualisation, salesbyyearvisualisation, datacorrelation, dataheatmap, priceofeachbymsrplmplot
+from app.models import getorderbyid, clean_data, getorderbystatus
 from app.ml import train_test, predict
 
+
 @app.route('/')
-def home():
-    return "Welcome"
+def index():
+    return render_template('index.html')
 
 @app.route('/orders', methods=['GET'])
 def fetchall():
-    df = load_clean_data()
+    df = clean_data()
     if df is not None and not df.empty:
         data = df.to_dict(orient='records')
         return jsonify(data), 200
     else:
-        return jsonify({"Error": "No data available"}), 500
+        return jsonify("Aucune commande trouvée"), 500
 
 
 @app.route('/order/<int:id>', methods=['GET'])
@@ -23,58 +24,24 @@ def fetchbyid(id):
     if order:
         return jsonify(order), 200
     else:
-        return jsonify({"Error": "Order not found"}), 404
-
+        return jsonify("Aucune commande trouvée"), 404
+    
 @app.route('/orders/status', methods=['GET'])
 def fetchbystatus():
     status = request.args.get('status')
     if not status:
-        return jsonify({"Error": "Status not provided"}), 400
+        return jsonify("Aucun status n'a ce nom"), 400
     
     orders = getorderbystatus(status)
     if orders:
         return jsonify(orders), 200
     else:
-        return jsonify({"Error": "No orders found for the status"}), 404
-
-@app.route('/datadescription', methods=['GET'])
-def data_description():
-    description = datadescription()
-    if description:
-        return description.to_json()
-    else:
-        return jsonify({"Error": "No data available"}), 404
-
-@app.route('/datacorrelation', methods=['GET'])
-def data_correlation():
-    result = datacorrelation()
-    return jsonify(result)
-
-@app.route('/heatmap', methods=['GET'])
-def data_heatmap():
-    result= dataheatmap()
-    return jsonify(result)
-
-@app.route('/salesbycountryvisualisation', methods=['GET'])
-def salesbycountry_visualisation():
-    result = salesbycountryvisualisation()
-    return jsonify(result)
-
-@app.route('/salesbyyearvisualisation', methods=['GET'])
-def salesbyyear_visualisation():
-    result = salesbyyearvisualisation()
-    return jsonify(result)
-
-@app.route('/lmplot', methods=['GET'])
-def lmplot_priceofeachbymsrp():
-    result= priceofeachbymsrplmplot()
-    return jsonify(result)
-
+        return jsonify("Aucune commande trouvée pour ce status"), 404
+    
 @app.route('/predictsales', methods=['POST'])
 def predict_sales():
     model, colonnes = train_test()
     data = request.json
     prediction = predict(model, data, colonnes)
     return jsonify(float(prediction[0])), 200
-
 
