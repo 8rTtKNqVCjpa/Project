@@ -11,8 +11,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 plt.switch_backend('Agg')
-external_stylesheet=['/assets/heatmap.css']
-apl= dash.Dash(__name__, server= app, external_stylesheets=external_stylesheet, routes_pathname_prefix='/heatmap/')
+apl= dash.Dash(__name__, server= app, routes_pathname_prefix='/heatmap/')
 df= clean_data()
 
 def heatmap(dataframe):
@@ -21,7 +20,7 @@ def heatmap(dataframe):
         if df_num.empty:
             return "Pas de données numériques"
         else:
-            plt.figure(figsize=(18,14))
+            plt.figure(figsize=(14,14))
             sns.heatmap(df_num.corr(), annot=True, cmap= 'coolwarm')
             buffer= io.BytesIO()
             plt.savefig(buffer, format='png')
@@ -33,13 +32,6 @@ def heatmap(dataframe):
         return " Abscence de données"
     
 apl.layout= html.Div([
-    html.H1("Heatmap de données"),
+    html.H1("Heatmap de données", className='heatmap-title'),
     html.Div(id='figure', children=[html.Img(src='data:image/png;base64,{}'.format(heatmap(df)), className='heatmap')],className='heatmapcontainer'),
-    dcc.Interval(id='Interval', n_intervals=0, interval=5*1000)
 ])
-
-@apl.callback(Output(component_id='figure', component_property='children'),
-              Input(component_id='Interval', component_property='n_interval'))
-def updateheatmap(n):
-    df= clean_data()
-    return html.Img(src='data:image/png;base64,{}'.format(heatmap(df)), className='heatmap')
