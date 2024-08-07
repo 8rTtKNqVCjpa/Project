@@ -1,0 +1,162 @@
+body{
+    background-color: rgb(211, 247, 255);
+}
+.container {
+    display: grid;
+    grid-template-columns:35% 35%;
+    gap: 30px;
+    padding: 20px;
+    justify-content: end;
+    row-gap: 80px;
+}
+
+.container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    align-content: start;
+    width: 20%;
+    height:100%;
+    position: absolute;
+    top: 50px;
+    gap: 40%;
+    
+}
+
+#indicateur{
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    height: 25%;
+    width: 90%;
+}
+#indicateur1{
+    position: absolute;
+    background-color:rgb(255, 255, 255);
+    height: 25%;
+    width: 90%;
+}
+#indicateur2{
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    height: 25%;
+    width: 90%;
+}
+#indicateur3{
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    height: 25%;
+    width: 90%;
+}
+.indicateurup::before {
+    position: absolute;
+    content: '▲';
+    color: green;
+    font-size: 40px;
+    top:10px;
+    right: 10%;
+
+}
+
+.indicateurdown::before {
+    position: absolute;
+    content: '▼';
+    color: red;
+    font-size: 40px;
+    top:10px;
+    right: 10%;
+}
+
+.total-sales {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.total-qtr {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.year{
+    margin-left: 15px;
+    font-size: 16px;
+}
+#visu2 {
+    grid-column: span 2;
+}
+.total{
+    position: absolute;
+    font-size: 30px;
+    font-weight: bold;
+    bottom: 30px;
+    left: 15%;
+}
+.total-com {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.country {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+#dropdown{
+    margin-top: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; 
+    gap: 10px; 
+    margin: 20px 0;
+}
+
+
+.button, .button1 {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.button:hover, .button1:hover {
+    background-color: #0056b3;
+}
+
+.heatmapcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh; 
+    text-align: center;
+    padding: 20px; 
+}
+
+
+.heatmap-title {
+    position: absolute;
+    left:38%;
+    font-size: 2em; 
+    font-weight: bold; 
+    margin-bottom: 20px; 
+}
+
+.heatmap {
+    position: absolute;
+    width: 700px; 
+    height: 600px;
+    top: 20%; 
+}
